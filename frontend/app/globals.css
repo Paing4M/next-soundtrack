@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--bg-color: #110e20;
+	--secondary-color: #282247;
+	--side-color: #1b1730;
+}
+
+body {
+	height: 100vh;
+	background-color: var(--bg-color);
+}
