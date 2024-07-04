@@ -1,7 +1,8 @@
 import { HeartIcon } from '@heroicons/react/24/solid'
 import HeaderTop from './HeaderTop'
+import { CustomUser } from '@/auth'
 
-const Header = () => {
+const Header = ({ user }: { user: CustomUser }) => {
 	return (
 		<div className='text-white px-6 pb-4  h-fit bg-gradient-to-b from-[#372d68] to-bg-bg-color'>
 			<HeaderTop />

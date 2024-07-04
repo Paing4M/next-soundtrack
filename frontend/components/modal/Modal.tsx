@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({
 			open={isOpen}
 			as='div'
 			className='relative z-10 focus:outline-none'
-			onClose={onClose}
+			onClose={() => null}
 		>
 			<div className='fixed bg-neutral-900/90 backdrop-blur-sm inset-0 z-10 w-screen overflow-y-auto'>
 				<div className='flex min-h-full items-center justify-center p-4'>
@@ -30,8 +30,8 @@ const Modal: React.FC<ModalProps> = ({
 						className='w-full max-w-md rounded-xl bg-white/10 p-6 backdrop-blur-2xl h-full min-h-auto duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0'
 					>
 						<DialogTitle
-							as='h3'
-							className='text-base/7 capitalize text-center font-medium text-white'
+							as='h2'
+							className='text-xl  capitalize text-center font-medium text-white'
 						>
 							{title}
 						</DialogTitle>
