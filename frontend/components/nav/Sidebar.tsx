@@ -9,7 +9,7 @@ import {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Box from './Box'
-import AddLibraryBtn from '@/components/song/AddLibraryBtn'
+import AddLibraryBtn from '../song/AddLibraryBtn'
 
 const Sidebar = () => {
 	const pathname = usePathname()

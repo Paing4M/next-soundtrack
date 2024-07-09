@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import NavigationBtns from '../nav/NavigationBtns'
+
 import Link from 'next/link'
 import {
 	HomeIcon,
@@ -12,6 +12,7 @@ import {
 import { CustomUser } from '@/auth'
 import useAuthModal from '@/hooks/useAuthModal'
 import HeaderUserMenu from './HeaderUserMenu'
+import NavigationBtns from '../nav/NavigationBtns'
 
 const HeaderTop = ({ user }: { user: CustomUser }) => {
 	const { onOpen } = useAuthModal()
