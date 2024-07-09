@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthConfig } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { Axios } from './config/axios'
+import Axios from './config/axios'
 import { JWT } from 'next-auth/jwt'
 import { AdapterUser } from 'next-auth/adapters'
 
@@ -29,7 +29,7 @@ const credentialConfig = CredentialsProvider({
 		password: { label: 'Password', type: 'password' },
 	},
 	async authorize(credentials) {
-		console.log({ credentials })
+		// console.log({ credentials })
 		const data = {
 			email: credentials?.email,
 			password: credentials?.password,

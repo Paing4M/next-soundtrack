@@ -1,8 +1,17 @@
+'use client'
+
+import { register } from '@/actions/register'
+import { useFormState } from 'react-dom'
+import InputError from '../error/InputError'
+import SubmitBtn from './SubmitBtn'
+
 const RegisterForm = () => {
+	const [state, formAction] = useFormState(register, undefined)
+
 	return (
 		<div className='flex min-h-full flex-col  justify-center px-6 lg:px-8'>
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-				<form className='space-y-2'>
+				<form action={formAction} className='space-y-2'>
 					<div>
 						<label
 							htmlFor='name'
@@ -15,8 +24,9 @@ const RegisterForm = () => {
 								id='name'
 								name='name'
 								type='text'
-								className='px-4 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
+								className='px-3 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
 							/>
+							<InputError error={state?.errors?.name?.[0]} />
 						</div>
 					</div>
 					<div>
@@ -31,8 +41,9 @@ const RegisterForm = () => {
 								id='email'
 								name='email'
 								type='text'
-								className='px-4 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
+								className='px-3 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
 							/>
+							<InputError error={state?.errors?.email?.[0]} />
 						</div>
 					</div>
 					<div>
@@ -49,17 +60,13 @@ const RegisterForm = () => {
 								id='password'
 								name='password'
 								type='password'
-								className='px-4 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
+								className='px-3 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
 							/>
+							<InputError error={state?.errors?.password?.[0]} />
 						</div>
 					</div>
 					<div>
-						<button
-							type='submit'
-							className='flex w-full mt-6 justify-center rounded-md bg-neutral-100 hover:bg-white transition px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm '
-						>
-							Register
-						</button>
+						<SubmitBtn>Register</SubmitBtn>
 					</div>
 				</form>
 			</div>

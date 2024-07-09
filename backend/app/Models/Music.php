@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Music extends Model {
   use HasFactory, HasUuids;
+
+
+  public $fillable = [
+    'title',
+    'author',
+    'song',
+    'image',
+  ];
 }

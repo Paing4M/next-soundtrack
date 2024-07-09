@@ -1,21 +1,31 @@
 'use client'
 
-import { BackwardIcon, ForwardIcon } from '@heroicons/react/24/solid'
-import MediaItem from './MediaItem'
-import PlayPauseIcon from './PlayPauseIcon'
 import usePlayer from '@/hooks/usePlayer'
-import { useState } from 'react'
-import VolumeControl from './VolumeControl'
+import { useEffect, useRef, useState } from 'react'
+import MobilePlayer from './MobilePlayer'
+import DesktopPlayer from './DesktopPlayer'
 
-const PlayerContent = () => {
+const PlayerContent = ({
+	song,
+	songUrl,
+}: {
+	song: MusicType
+	songUrl: string
+}) => {
+	const audioRef = useRef<HTMLAudioElement | null>(null)
+
 	const player = usePlayer()
-	const [isPlaying, setIsPlaying] = useState(false)
+	const [isPlaying, setIsPlaying] = useState(true)
+	const [duration, setDuration] = useState(0)
 	const [volume, setVolume] = useState(1)
+	const [currentTime, setCurrentTime] = useState(0)
 
 	const onPlayNext = () => {
 		if (player.ids?.length == 0) {
 			return
 		}
+
+		setIsPlaying(true)
 
 		const currentIdx = player.ids?.findIndex((i) => i == player.activeId)
 		const nextSong = player.ids?.[currentIdx! + 1]
@@ -32,6 +42,8 @@ const PlayerContent = () => {
 			return
 		}
 
+		setIsPlaying(true)
+
 		const currentIdx = player.ids?.findIndex((i) => i == player.activeId)
 		const prevSong = player.ids?.[currentIdx! - 1]
 
@@ -42,30 +54,92 @@ const PlayerContent = () => {
 		player.setId(prevSong)
 	}
 
+	useEffect(() => {
+		if (isPlaying) {
+			audioRef?.current?.play()
+			const audioDuration = audioRef?.current?.duration
+			setDuration(audioDuration!)
+		}
+	}, [isPlaying])
+
+	const handleClick = () => {
+		if (!isPlaying) {
+			audioRef?.current?.play()
+		} else {
+			audioRef?.current?.pause()
+		}
+
+		setIsPlaying((prev) => !prev)
+	}
+
+	const handleVolumeChange = (value: number) => {
+		if (audioRef.current) {
+			audioRef.current.volume = value
+		}
+		setVolume(value)
+	}
+
+	const handleLoadedMetadata = (e: React.SyntheticEvent<HTMLAudioElement>) => {
+		setDuration(e.currentTarget.duration)
+		setCurrentTime(e.currentTarget.currentTime)
+	}
+
+	const handleTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement>) => {
+		setCurrentTime(e.currentTarget.currentTime)
+		setDuration(audioRef?.current?.duration!)
+	}
+
+	const handleValueChange = (value: number[]) => {
+		if (audioRef.current) {
+			const newTime = value[0]
+			audioRef.current.currentTime = newTime
+			setCurrentTime(newTime)
+		}
+	}
+
+	const handleEnded = () => {
+		setIsPlaying(false)
+		onPlayNext()
+	}
+
 	return (
-		<div className='grid grid-cols-2 xs:grid-cols-3 h-full content-center '>
-			<MediaItem />
+		<>
+			<DesktopPlayer
+				song={song}
+				onPlayNext={onPlayNext}
+				onPlayPrev={onPlayPrev}
+				duration={duration}
+				currentTime={currentTime}
+				isPlaying={isPlaying}
+				handleClick={handleClick}
+				volume={volume}
+				handleVolumeChange={handleVolumeChange}
+				handleValueChange={handleValueChange}
+			/>
 
-			<div className='flex gap-x-6 items-center justify-center'>
-				<button>
-					<BackwardIcon
-						onClick={onPlayPrev}
-						className='text-neutral-400 hover:text-white w-5'
-					/>
-				</button>
-				<PlayPauseIcon isPlaying={isPlaying} />
-				<button>
-					<ForwardIcon
-						onClick={onPlayNext}
-						className='text-neutral-400 hover:text-white w-5'
-					/>
-				</button>
-			</div>
+			<MobilePlayer
+				song={song}
+				onPlayNext={onPlayNext}
+				onPlayPrev={onPlayPrev}
+				duration={duration}
+				currentTime={currentTime}
+				isPlaying={isPlaying}
+				handleClick={handleClick}
+				volume={volume}
+				handleVolumeChange={handleVolumeChange}
+				handleValueChange={handleValueChange}
+			/>
 
-			<div className='xs:flex hidden justify-center'>
-				<VolumeControl volume={volume} />
-			</div>
-		</div>
+			<audio
+				onTimeUpdate={handleTimeUpdate}
+				onLoadedMetadata={handleLoadedMetadata}
+				onEnded={handleEnded}
+				ref={audioRef}
+				src={songUrl}
+				className='hidden'
+				aria-label='audio'
+			></audio>
+		</>
 	)
 }
 

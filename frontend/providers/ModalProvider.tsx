@@ -1,5 +1,6 @@
 'use client'
 
+import AddSongModal from '@/components/modal/AddSongModal'
 import AuthModal from '@/components/modal/AuthModal'
 import Modal from '@/components/modal/Modal'
 import { useEffect, useState } from 'react'
@@ -18,6 +19,7 @@ const ModalProvider: React.FC<ModalProviderProps> = ({}) => {
 	return (
 		<>
 			<AuthModal />
+			<AddSongModal />
 		</>
 	)
 }

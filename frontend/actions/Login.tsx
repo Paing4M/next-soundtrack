@@ -1,5 +1,6 @@
-import { Axios } from '@/config/axios'
+import Axios from '@/config/axios'
 import { signIn } from 'next-auth/react'
+import toast from 'react-hot-toast'
 
 export const login = async (prevState: any, formData: FormData) => {
 	try {
@@ -14,8 +15,9 @@ export const login = async (prevState: any, formData: FormData) => {
 			signIn('credentials', {
 				email: data.email,
 				password: data.password,
-				// callbackUrl: '/',
+				callbackUrl: '/',
 			})
+			toast.success(res?.data?.message)
 		}
 	} catch (error: any) {
 		console.log('login err', error)

@@ -25,7 +25,7 @@ class AuthController extends Controller {
     $data = array_merge($user->toArray(), ['token' => $token]);
 
     return response()->json([
-      'message' => 'Login user successfully.',
+      'message' => 'Login successfully.',
       'user' => $data,
       'status' => '200'
     ]);
@@ -35,6 +35,7 @@ class AuthController extends Controller {
   public function register(RegisterRequest $request) {
 
     $data = $request->validated();
+    $data['email_verified_at'] = now();
 
     $user = User::create($data);
     $token = $user->createToken('authToken_' . $user->name)->plainTextToken;
@@ -55,7 +56,7 @@ class AuthController extends Controller {
   public function logout(Request $request) {
     $request->user()->currentAccessToken()->delete();
     return response()->json([
-      'message' => 'Log out successfully.',
+      'message' => 'Logout successfully.',
       'status' => 200
     ], 200);
   }

@@ -12,3 +12,7 @@ body {
 	height: 100vh;
 	background-color: var(--bg-color);
 }
+
+.BottomSheet__drag-indicator {
+	background-color: #ccbaba !important;
+}

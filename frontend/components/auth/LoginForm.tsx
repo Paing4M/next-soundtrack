@@ -1,8 +1,9 @@
 'use client'
 
-import { login } from '@/actions/Login'
+import { login } from '@/actions/login'
 import { useFormState, useFormStatus } from 'react-dom'
 import InputError from '../error/InputError'
+import SubmitBtn from './SubmitBtn'
 
 const LoginForm = () => {
 	const [state, formAction] = useFormState(login, undefined)
@@ -28,7 +29,7 @@ const LoginForm = () => {
 								id='email'
 								name='email'
 								type='text'
-								className='px-4 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
+								className='px-3 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
 							/>
 						</div>
 						{state?.errors?.email && (
@@ -49,7 +50,7 @@ const LoginForm = () => {
 								id='password'
 								name='password'
 								type='password'
-								className='px-4 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
+								className='px-3 py-2 border-none outline-none bg-neutral-800 rounded-md w-full'
 							/>
 						</div>
 						{state?.errors?.password && (
@@ -57,12 +58,7 @@ const LoginForm = () => {
 						)}
 					</div>
 					<div>
-						<button
-							type='submit'
-							className='flex w-full mt-6 justify-center rounded-md bg-neutral-100 hover:bg-white transition px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm '
-						>
-							Login
-						</button>
+						<SubmitBtn>Login</SubmitBtn>
 					</div>
 				</form>
 			</div>

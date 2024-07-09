@@ -1,6 +1,13 @@
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
 
-const PlayPauseIcon = ({ isPlaying }: { isPlaying: boolean }) => {
+interface PlayPauseIconProps extends React.HTMLAttributes<HTMLDivElement> {
+	isPlaying: boolean
+}
+
+const PlayPauseIcon: React.FC<PlayPauseIconProps> = ({
+	isPlaying,
+	...props
+}) => {
 	const icon = isPlaying ? (
 		<PauseIcon className='w-7 text-black ' />
 	) : (
@@ -8,7 +15,10 @@ const PlayPauseIcon = ({ isPlaying }: { isPlaying: boolean }) => {
 	)
 
 	return (
-		<div className='w-10 h-10 flex items-center justify-center  rounded-full cursor-pointer bg-white'>
+		<div
+			{...props}
+			className={`w-10 h-10 flex items-center justify-center  rounded-full cursor-pointer bg-white`}
+		>
 			{icon}
 		</div>
 	)

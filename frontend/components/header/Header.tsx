@@ -5,7 +5,7 @@ import { CustomUser } from '@/auth'
 const Header = ({ user }: { user: CustomUser }) => {
 	return (
 		<div className='text-white px-6 pb-4  h-fit bg-gradient-to-b from-[#372d68] to-bg-bg-color'>
-			<HeaderTop />
+			<HeaderTop user={user} />
 
 			<div className='mt-3'>
 				<h2 className='text-2xl'>Welcome back !</h2>

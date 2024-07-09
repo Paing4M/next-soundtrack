@@ -3,9 +3,13 @@ import Slider from './Slider'
 
 interface VolumeControlProps {
 	volume: number
+	handleVolumeChange: (value: number) => void
 }
 
-const VolumeControl: React.FC<VolumeControlProps> = ({ volume }) => {
+const VolumeControl: React.FC<VolumeControlProps> = ({
+	volume,
+	handleVolumeChange,
+}) => {
 	const icon = volume ? (
 		<SpeakerWaveIcon className='w-5 text-white' />
 	) : (
@@ -16,7 +20,7 @@ const VolumeControl: React.FC<VolumeControlProps> = ({ volume }) => {
 		<div className='flex w-[50%] items-center cursor-pointer gap-x-1'>
 			{icon}
 
-			<Slider value={volume} />
+			<Slider onChange={handleVolumeChange} value={volume} />
 		</div>
 	)
 }
