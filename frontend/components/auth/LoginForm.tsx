@@ -8,7 +8,7 @@ import SubmitBtn from './SubmitBtn'
 const LoginForm = () => {
 	const [state, formAction] = useFormState(login, undefined)
 
-	console.log(state)
+	// console.log(state)
 
 	return (
 		<div className='flex min-h-full flex-col justify-center px-6 lg:px-8'>

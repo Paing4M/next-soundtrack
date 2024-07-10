@@ -14,7 +14,7 @@ Axios.interceptors.request.use(
 
 			config.headers = {
 				Accept: 'application/json',
-				'Content-Type': 'application/json',
+				'Content-Type': 'multipart/form-data',
 				Authorization: `Bearer ${token?.user.token}`,
 			} as AxiosRequestHeaders
 		} catch (error) {

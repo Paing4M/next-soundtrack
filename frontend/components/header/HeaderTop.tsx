@@ -3,12 +3,7 @@
 import Image from 'next/image'
 
 import Link from 'next/link'
-import {
-	HomeIcon,
-	MagnifyingGlassIcon,
-	PlusIcon,
-	UserCircleIcon,
-} from '@heroicons/react/24/solid'
+import { HomeIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { CustomUser } from '@/auth'
 import useAuthModal from '@/hooks/useAuthModal'
 import HeaderUserMenu from './HeaderUserMenu'

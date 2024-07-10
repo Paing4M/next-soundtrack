@@ -21,6 +21,9 @@ const useGetSongById = (id: string) => {
 						responseType: 'blob',
 					}
 				)
+
+				// console.log(res)
+
 				if (res.data) {
 					const blob = new Blob([res.data], { type: 'audio/mpeg' })
 					const url = URL.createObjectURL(blob)
@@ -34,7 +37,6 @@ const useGetSongById = (id: string) => {
 		const getActiveSong = async () => {
 			setLoading(true)
 			const res = await getSong(id)
-			// console.log(res)
 			if (res) {
 				setLoading(false)
 				setSong(res.data)

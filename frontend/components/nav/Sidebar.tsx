@@ -71,7 +71,7 @@ const Sidebar = () => {
 						<span>Your Library</span>
 					</div>
 
-					<AddLibraryBtn />
+					{/* <AddLibraryBtn /> */}
 				</div>
 			</Box>
 		</div>

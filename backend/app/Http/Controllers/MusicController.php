@@ -54,8 +54,6 @@ class MusicController extends Controller {
   }
 
 
-
-
   public function stream(Music $music) {
     $music = Music::findOrFail($music->id);
 

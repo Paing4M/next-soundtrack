@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react'
 
 const AddLibraryBtn = () => {
 	return (
-		<button onClick={() => signIn()} className='text-neutral-400'>
+		<button onClick={() => {}} className='text-neutral-400'>
 			<PlusIcon className='w-6' />
 		</button>
 	)

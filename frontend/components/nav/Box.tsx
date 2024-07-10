@@ -10,7 +10,7 @@ const Box: FC<BoxProps> = ({ className, children }) => {
 	return (
 		<div
 			className={twMerge(
-				`rounded-md h-fit w-[300px] px-6 bg-side-color text-white`,
+				`rounded-md h-fit w-[300px] px-6 bg-side-color text-white flex flex-col`,
 				className
 			)}
 		>

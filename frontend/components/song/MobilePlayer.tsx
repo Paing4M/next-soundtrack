@@ -113,7 +113,7 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 					<div className='w-full h-full max-w-[350px] mx-auto'>
 						<Image
 							src={song.image ? song.image : '/assets/logo.png'}
-							className='object-cover rounded-lg mx-auto w-[300px] h-[330px]'
+							className='object-cover rounded-lg w-[350px] h-[330px]'
 							alt='img'
 							width={280}
 							height={450}
