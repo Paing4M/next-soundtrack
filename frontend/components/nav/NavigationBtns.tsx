@@ -12,13 +12,13 @@ const NavigationBtns = () => {
 				className='bg-bg-color group flex items-center justify-center p-[6px]  rounded-full'
 				onClick={() => router.back()}
 			>
-				<ChevronLeftIcon className='text-neutral-300 transition w-5 group-hover:text-white' />
+				<ChevronLeftIcon className='text-neutral-300 transition w-5 group-hover:text-white translate-x-[-2px]' />
 			</button>
 			<button
 				className='bg-bg-color group flex items-center justify-center p-[6px]  rounded-full'
 				onClick={() => router.forward()}
 			>
-				<ChevronRightIcon className='text-neutral-300 transition w-5 group-hover:text-white' />
+				<ChevronRightIcon className='text-neutral-300 transition w-5 group-hover:text-white translate-x-[2px]' />
 			</button>
 		</div>
 	)

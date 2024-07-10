@@ -39,3 +39,8 @@ export const addSong = async (prevState: any, formData: FormData) => {
 		}
 	}
 }
+
+export const addLibrary = async (id: string) => {
+	const res = await Axios.post('/music/add-library', { music_id: id })
+	return res.data
+}

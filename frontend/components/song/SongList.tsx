@@ -1,9 +1,7 @@
 'use client'
 
-import usePlayer from '@/hooks/usePlayer'
 import SongItem from './SongItem'
 import useOnPlay from '@/hooks/useOnPlay'
-import MobileSongList from './MobileSongItem'
 import MobileSongItem from './MobileSongItem'
 
 interface SongListProps {

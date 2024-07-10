@@ -11,6 +11,7 @@ type MusicType = {
 	song?: string
 	path?: string | null
 	image?: string | null
+	isInUserLibrary?: boolean
 }
 
 type LinkType = {

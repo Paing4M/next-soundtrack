@@ -2,6 +2,7 @@
 
 import BottomSheet from 'react-draggable-bottom-sheet'
 import { BackwardIcon, ForwardIcon } from '@heroicons/react/24/solid'
+import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline'
 import MediaItem from './MediaItem'
 import PlayPauseIcon from './PlayPauseIcon'
 import { useEffect, useState } from 'react'
@@ -23,6 +24,7 @@ interface MobilePlayerProps {
 	volume: number
 	handleVolumeChange: (value: number) => void
 	handleValueChange: (value: number[]) => void
+	addToLibrary: (id: string) => void
 }
 
 const MobilePlayer: React.FC<MobilePlayerProps> = ({
@@ -36,6 +38,7 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 	volume,
 	handleVolumeChange,
 	handleValueChange,
+	addToLibrary,
 }) => {
 	const { isOpen, onClose, onOpen } = useMobilePlayer()
 	const [width, setWidth] = useState(0)
@@ -66,16 +69,25 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 				onClick={onOpen}
 				className='flex items-center h-full justify-between md:hidden relative cursor-pointer z-[1]'
 			>
-				<MediaItem song={song} />
-				<div className='flex  items-center gap-3 z-10'>
-					<button className=''>
-						<BackwardIcon
-							onClick={(e) => {
-								e.stopPropagation()
-								onPlayPrev()
-							}}
-							className='hidden xs:block text-neutral-400  hover:text-white w-7'
-						/>
+				<div className='flex items-center gap-4'>
+					<MediaItem song={song} />
+
+					<button>
+						<HeartOutlineIcon className='w-5' />
+					</button>
+				</div>
+				<div
+					onClick={(e) => e.stopPropagation()}
+					className='flex  items-center gap-1 z-10'
+				>
+					<button
+						onClick={(e) => {
+							e.stopPropagation()
+							onPlayPrev()
+						}}
+						className='p-3'
+					>
+						<BackwardIcon className='hidden xs:block text-neutral-400  hover:text-white  w-7' />
 					</button>
 					<div className=''>
 						<PlayPauseIcon
@@ -86,14 +98,14 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 							isPlaying={isPlaying}
 						/>
 					</div>
-					<button className=''>
-						<ForwardIcon
-							onClick={(e) => {
-								e.stopPropagation()
-								onPlayNext()
-							}}
-							className='text-neutral-400  hover:text-white w-7'
-						/>
+					<button
+						onClick={(e) => {
+							e.stopPropagation()
+							onPlayNext()
+						}}
+						className='p-3'
+					>
+						<ForwardIcon className='text-neutral-400  hover:text-white w-7' />
 					</button>
 				</div>
 			</div>

@@ -9,7 +9,6 @@ import {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Box from './Box'
-import AddLibraryBtn from '../song/AddLibraryBtn'
 
 const Sidebar = () => {
 	const pathname = usePathname()
@@ -64,15 +63,17 @@ const Sidebar = () => {
 				</div>
 			</Box>
 
-			<Box className='h-full py-4'>
+			<Box className='h-[calc(100vh-288px)] py-4 flex flex-col'>
 				<div className='flex items-center justify-between'>
-					<div className='flex items-center gap-x-4 text-neutral-400'>
+					<div className='flex items-center gap-x-4 text-neutral-400 mb-4'>
 						<MusicalNoteIcon className='w-6' />
 						<span>Your Library</span>
 					</div>
 
 					{/* <AddLibraryBtn /> */}
 				</div>
+
+				<div className='flex-1 overflow-hidden overflow-y-auto  scrollbar-hide'></div>
 			</Box>
 		</div>
 	)

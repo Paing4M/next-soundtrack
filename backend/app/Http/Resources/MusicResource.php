@@ -19,6 +19,7 @@ class MusicResource extends JsonResource {
       'author' => $this->author,
       'song' => $this->song,
       'image' => $this->image ? Storage::url($this->image) : null,
+      'isInUserLibrary' => $this->isInUserLibrary,
     ];
   }
 }

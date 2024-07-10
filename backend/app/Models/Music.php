@@ -16,4 +16,15 @@ class Music extends Model {
     'song',
     'image',
   ];
+
+
+  public function user() {
+    return $this->belongsToMany(User::class, 'libraries');
+  }
+
+
+  public function getIsInUserLibraryAttribute() {
+    if (!auth('sanctum')->user()) return false;
+    return $this->user->contains('id', auth('sanctum')->user()->id);
+  }
 }

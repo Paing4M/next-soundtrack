@@ -5,7 +5,7 @@ import { JWT } from 'next-auth/jwt'
 import { AdapterUser } from 'next-auth/adapters'
 
 declare module 'next-auth' {
-	interface Session {
+	export interface Session {
 		user: CustomUser
 		expires: string
 	}

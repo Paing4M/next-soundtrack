@@ -4,6 +4,8 @@ import Seeker from './Seeker'
 import { BackwardIcon, ForwardIcon } from '@heroicons/react/24/solid'
 import PlayPauseIcon from './PlayPauseIcon'
 import MediaItem from './MediaItem'
+import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline'
+import { HeartIcon } from '@heroicons/react/24/solid'
 
 interface DesktopPlayerProps {
 	song: MusicType
@@ -16,6 +18,7 @@ interface DesktopPlayerProps {
 	volume: number
 	handleVolumeChange: (value: number) => void
 	handleValueChange: (value: number[]) => void
+	addToLibrary: (id: string) => void
 }
 
 const DesktopPlayer: React.FC<DesktopPlayerProps> = ({
@@ -29,10 +32,21 @@ const DesktopPlayer: React.FC<DesktopPlayerProps> = ({
 	volume,
 	handleVolumeChange,
 	handleValueChange,
+	addToLibrary,
 }) => {
 	return (
 		<div className='hidden md:grid grid-cols-2 sm:grid-cols-3 h-full content-center '>
-			<MediaItem song={song} />
+			<div className='flex items-center gap-4'>
+				<MediaItem song={song} />
+
+				<button onClick={() => addToLibrary(song.id!)} className='p-2'>
+					{song.isInUserLibrary ? (
+						<HeartIcon className='w-5' />
+					) : (
+						<HeartOutlineIcon className='w-5' />
+					)}
+				</button>
+			</div>
 
 			<div className='flex flex-col space-y-1'>
 				<div className='flex gap-x-6 items-center justify-center '>

@@ -4,20 +4,22 @@ import usePlayer from '@/hooks/usePlayer'
 import { useEffect, useRef, useState } from 'react'
 import MobilePlayer from './MobilePlayer'
 import DesktopPlayer from './DesktopPlayer'
+import { addLibrary } from '@/actions/song'
 
 const PlayerContent = ({
-	song,
+	song: initial,
 	songUrl,
 }: {
 	song: MusicType
 	songUrl: string
 }) => {
-	const audioRef = useRef<HTMLAudioElement | null>(null)
+	const [song, setSong] = useState<MusicType>(initial)
 
+	const audioRef = useRef<HTMLAudioElement | null>(null)
 	const player = usePlayer()
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [duration, setDuration] = useState(0)
-	const [volume, setVolume] = useState(1)
+	const [volume, setVolume] = useState(0.8)
 	const [currentTime, setCurrentTime] = useState(0)
 
 	const onPlayNext = () => {
@@ -102,6 +104,16 @@ const PlayerContent = ({
 		onPlayNext()
 	}
 
+	const addToLibrary = async (id: string) => {
+		const res = await addLibrary(id)
+		console.log(res)
+		if (res?.status === 200) {
+			setSong((prev) => ({ ...prev, isInUserLibrary: false }))
+		} else if (res?.status === 201) {
+			setSong((prev) => ({ ...prev, isInUserLibrary: true }))
+		}
+	}
+
 	return (
 		<>
 			<DesktopPlayer
@@ -115,6 +127,7 @@ const PlayerContent = ({
 				volume={volume}
 				handleVolumeChange={handleVolumeChange}
 				handleValueChange={handleValueChange}
+				addToLibrary={addToLibrary}
 			/>
 
 			<MobilePlayer
@@ -128,6 +141,7 @@ const PlayerContent = ({
 				volume={volume}
 				handleVolumeChange={handleVolumeChange}
 				handleValueChange={handleValueChange}
+				addToLibrary={addToLibrary}
 			/>
 
 			<audio

@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Music\MusicStoreRequest;
 use App\Http\Resources\MusicResource;
+use App\Models\Library;
 use App\Models\Music;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
 class MusicController extends Controller {
 
-  public function index() {
-    $music = Music::latest()->paginate(10);
+  public function index(Request $request) {
+    $music = Music::when($request->query('search'), function ($q) use ($request) {
+      $q->where('title', 'LIKE', "%{$request->query('search')}%")
+        ->orWhere('author', 'LIKE', "%{$request->query('search')}%");
+    })->latest()->paginate(10);
 
     return MusicResource::collection($music);
   }
@@ -52,6 +57,32 @@ class MusicController extends Controller {
       ], 201);
     }
   }
+
+
+
+  public function addLibrary(Request $request) {
+
+    $user = $request->user('sanctum');
+    $music = Music::findOrFail($request->music_id);
+
+    if ($music->is_in_user_library) {
+      $user->library()->detach($request->music_id);
+      return response()->json([
+        'message' => 'Remove from library successfully.',
+        'status' => 200,
+
+      ]);
+    }
+
+    $user->library()->attach($request->music_id);
+
+    return response()->json([
+      'message' => 'Added to library successfully.',
+      'status' => 201,
+
+    ], 201);
+  }
+
 
 
   public function stream(Music $music) {
