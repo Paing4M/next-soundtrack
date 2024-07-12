@@ -1,8 +1,10 @@
 import Image from 'next/image'
 
-// interface MediaIemProps {}
+interface MediaItemProps {
+	song: MusicType
+}
 
-const MediaItem = ({ song }: { song: MusicType }) => {
+const MediaItem: React.FC<MediaItemProps> = ({ song }) => {
 	return (
 		<div className='flex gap-x-3 items-center'>
 			<div className=' overflow-hidden rounded-md w-12 h-12'>

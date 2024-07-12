@@ -6,6 +6,7 @@ use App\Http\Requests\Music\MusicStoreRequest;
 use App\Http\Resources\MusicResource;
 use App\Models\Library;
 use App\Models\Music;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class MusicController extends Controller {
     $music = Music::when($request->query('search'), function ($q) use ($request) {
       $q->where('title', 'LIKE', "%{$request->query('search')}%")
         ->orWhere('author', 'LIKE', "%{$request->query('search')}%");
-    })->latest()->paginate(10);
+    })->latest()->cursorPaginate(20);
 
     return MusicResource::collection($music);
   }
@@ -26,8 +27,6 @@ class MusicController extends Controller {
   public function show(Music $music) {
     return new MusicResource($music);
   }
-
-
 
 
   public function store(MusicStoreRequest $request) {
@@ -48,8 +47,6 @@ class MusicController extends Controller {
     $music = Music::create($data);
 
 
-
-
     if ($music) {
       return response()->json([
         'message' => 'Music is added successfully.',
@@ -59,7 +56,6 @@ class MusicController extends Controller {
   }
 
 
-
   public function addLibrary(Request $request) {
 
     $user = $request->user('sanctum');
@@ -67,20 +63,35 @@ class MusicController extends Controller {
 
     if ($music->is_in_user_library) {
       $user->library()->detach($request->music_id);
+      $music->load('user');
+      $music  = new MusicResource($music);
+
+
       return response()->json([
         'message' => 'Remove from library successfully.',
         'status' => 200,
-
+        'music' => new MusicResource($music)
       ]);
     }
 
     $user->library()->attach($request->music_id);
+    $music->load('user');
 
     return response()->json([
       'message' => 'Added to library successfully.',
       'status' => 201,
-
+      'music' => new MusicResource($music)
     ], 201);
+  }
+
+
+  public function getLibrary(Request $request) {
+
+    $user = User::find(auth('sanctum')->user()->id);
+    $library = $user->library()->orderBy('music.title')->cursorPaginate(15);
+
+
+    return MusicResource::collection($library);
   }
 
 

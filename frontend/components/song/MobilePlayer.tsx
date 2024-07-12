@@ -1,7 +1,7 @@
 'use client'
 
 import BottomSheet from 'react-draggable-bottom-sheet'
-import { BackwardIcon, ForwardIcon } from '@heroicons/react/24/solid'
+import { BackwardIcon, ForwardIcon, HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline'
 import MediaItem from './MediaItem'
 import PlayPauseIcon from './PlayPauseIcon'
@@ -72,8 +72,18 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 				<div className='flex items-center gap-4'>
 					<MediaItem song={song} />
 
-					<button>
-						<HeartOutlineIcon className='w-5' />
+					<button
+						className='p-3'
+						onClick={(e) => {
+							e.stopPropagation()
+							addToLibrary(song.id!)
+						}}
+					>
+						{song.isInUserLibrary ? (
+							<HeartIcon className='w-5' />
+						) : (
+							<HeartOutlineIcon className='w-5' />
+						)}
 					</button>
 				</div>
 				<div
@@ -139,7 +149,13 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 									{song.author}
 								</p>
 							</div>
-							liked
+							<button onClick={() => addToLibrary(song.id!)}>
+								{song.isInUserLibrary ? (
+									<HeartIcon className='w-5' />
+								) : (
+									<HeartOutlineIcon className='w-5' />
+								)}
+							</button>
 						</div>
 
 						<div className='my-4 mb-2'>

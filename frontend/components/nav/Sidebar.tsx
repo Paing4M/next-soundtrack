@@ -9,6 +9,8 @@ import {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Box from './Box'
+import LibrarySongList from '../library/LibrarySongList'
+import { useState } from 'react'
 
 const Sidebar = () => {
 	const pathname = usePathname()
@@ -38,7 +40,8 @@ const Sidebar = () => {
 							height={70}
 							src='/assets/logo.png'
 							alt='logo'
-							priority
+							// placeholder='blur'
+							// blurDataURL='/assets/logo.png'
 						/>
 						<h1>Next Soundtrack</h1>
 					</div>
@@ -69,11 +72,11 @@ const Sidebar = () => {
 						<MusicalNoteIcon className='w-6' />
 						<span>Your Library</span>
 					</div>
-
-					{/* <AddLibraryBtn /> */}
 				</div>
 
-				<div className='flex-1 overflow-hidden overflow-y-auto  scrollbar-hide'></div>
+				<div className='flex-1 overflow-hidden overflow-y-auto  scrollbar-hide'>
+					<LibrarySongList />
+				</div>
 			</Box>
 		</div>
 	)

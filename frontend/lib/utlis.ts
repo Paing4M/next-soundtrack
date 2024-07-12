@@ -5,3 +5,7 @@ export function formatTime(time: number): string {
 		seconds < 10 ? '0' : ''
 	}${seconds}`
 }
+
+export const sleep = (time: number): Promise<number> => {
+	return new Promise((resolve) => setTimeout(resolve, time))
+}

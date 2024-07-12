@@ -19,8 +19,7 @@ const getSongs = async (token: string = '') => {
 const HomePage = async () => {
 	const session = await auth()
 
-	const res = await getSongs(session?.user?.token!)
-	let songs = res.data
+	const songs = await getSongs(session?.user?.token!)
 
 	return (
 		<div className='h-[calc(100vh-80px)] text-white bg-bg-color flex-1 flex flex-col'>

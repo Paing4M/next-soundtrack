@@ -5,6 +5,10 @@ import { useEffect, useRef, useState } from 'react'
 import MobilePlayer from './MobilePlayer'
 import DesktopPlayer from './DesktopPlayer'
 import { addLibrary } from '@/actions/song'
+import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import { constants } from 'buffer'
+import { useEventBus } from '@/providers/EventBusProvider'
 
 const PlayerContent = ({
 	song: initial,
@@ -14,13 +18,16 @@ const PlayerContent = ({
 	songUrl: string
 }) => {
 	const [song, setSong] = useState<MusicType>(initial)
-
-	const audioRef = useRef<HTMLAudioElement | null>(null)
-	const player = usePlayer()
 	const [isPlaying, setIsPlaying] = useState(true)
 	const [duration, setDuration] = useState(0)
 	const [volume, setVolume] = useState(0.8)
 	const [currentTime, setCurrentTime] = useState(0)
+
+	const audioRef = useRef<HTMLAudioElement | null>(null)
+
+	const player = usePlayer()
+	const { data } = useSession()
+	const { emit } = useEventBus()
 
 	const onPlayNext = () => {
 		if (player.ids?.length == 0) {
@@ -105,12 +112,20 @@ const PlayerContent = ({
 	}
 
 	const addToLibrary = async (id: string) => {
+		if (!data?.user) {
+			toast.error('Please login first.')
+
+			return
+		}
+
 		const res = await addLibrary(id)
-		console.log(res)
-		if (res?.status === 200) {
-			setSong((prev) => ({ ...prev, isInUserLibrary: false }))
-		} else if (res?.status === 201) {
-			setSong((prev) => ({ ...prev, isInUserLibrary: true }))
+		if (res) {
+			if (res?.status === 200) {
+				setSong((prev) => ({ ...prev, isInUserLibrary: false }))
+			} else if (res?.status === 201) {
+				setSong((prev) => ({ ...prev, isInUserLibrary: true }))
+			}
+			emit('library', { status: res.status, music: res.music })
 		}
 	}
 

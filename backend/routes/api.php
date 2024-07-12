@@ -32,11 +32,14 @@ Route::post('/music', [MusicController::class, 'store'])->middleware(['auth:sanc
 
 Route::post('/music/add-library', [MusicController::class, 'addLibrary'])->middleware(['auth:sanctum']);
 
+Route::get('/library', [MusicController::class, 'getLibrary'])->middleware(['auth:sanctum']);
+
+
 
 
 Route::get('/test', function () {
 
   $user = User::find(auth('sanctum')->user()->id);
   // $lb = Library::where('user_id', $user->id);
-  return $user->library;
+  return $user->library()->paginate(1);
 });

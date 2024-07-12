@@ -1,5 +1,5 @@
-type MusicResponseType = {
-	data: MusicType[]
+type ApiResponseType<T> = {
+	data: T
 	links: LinkType
 	meta: MetaType
 }
@@ -22,14 +22,10 @@ type LinkType = {
 }
 
 type MetaType = {
-	current_page: number
-	from: number
-	last_page: number
-	links: MetaLink[]
-	path: string
-	per_page: number
-	to: number
-	total: number
+	path?: string | null
+	per_page?: number
+	next_cursor?: string | null
+	prev_cursor?: string | null
 }
 
 type MetaLink = {

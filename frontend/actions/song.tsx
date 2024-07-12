@@ -1,7 +1,7 @@
 import Axios from '@/config/axios'
 
-export const getSongs = async () => {
-	const res = await Axios.get('/music')
+export const getSongs = async (cursor: string | null = null) => {
+	const res = await Axios.get('/music?cursor=' + cursor)
 	return res.data
 }
 
@@ -42,5 +42,10 @@ export const addSong = async (prevState: any, formData: FormData) => {
 
 export const addLibrary = async (id: string) => {
 	const res = await Axios.post('/music/add-library', { music_id: id })
+	return res.data
+}
+
+export const getLibrary = async (cursor: string | null = null) => {
+	const res = await Axios.get('/library?cursor=' + cursor)
 	return res.data
 }

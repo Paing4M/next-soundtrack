@@ -19,7 +19,13 @@ class MusicResource extends JsonResource {
       'author' => $this->author,
       'song' => $this->song,
       'image' => $this->image ? Storage::url($this->image) : null,
-      'isInUserLibrary' => $this->isInUserLibrary,
+      'isInUserLibrary' => $this->isInUserLibrary ?? false,
+    ];
+  }
+
+  public function with($request): array {
+    return [
+      'status' => 200
     ];
   }
 }

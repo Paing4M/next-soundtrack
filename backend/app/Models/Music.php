@@ -27,4 +27,9 @@ class Music extends Model {
     if (!auth('sanctum')->user()) return false;
     return $this->user->contains('id', auth('sanctum')->user()->id);
   }
+
+  // public function setIsInUserLibraryAttribute() {
+  //   if (!auth('sanctum')->user()) return false;
+  //   return $this->user->contains('id', auth('sanctum')->user()->id);
+  // }
 }
