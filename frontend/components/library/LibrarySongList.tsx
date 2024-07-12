@@ -96,11 +96,11 @@ const LibrarySongList = () => {
 
 	useEffect(() => {
 		if (songs) {
-			const orderSongs = songs?.data.sort((a, b) => {
-				if (a?.title! < b.title!) {
+			const orderSongs = [...songs.data].sort((a, b) => {
+				if (a?.title?.toLowerCase()! < b?.title?.toLowerCase()!) {
 					return -1
 				}
-				if (a.title! > b.title!) {
+				if (a?.title?.toLowerCase()! > b?.title?.toLowerCase()!) {
 					return 1
 				}
 				return 0
@@ -108,7 +108,7 @@ const LibrarySongList = () => {
 
 			setOrderSongs(orderSongs)
 		}
-	}, [songs, orderSongs])
+	}, [songs])
 
 	if (!songs && !orderSongs) return
 

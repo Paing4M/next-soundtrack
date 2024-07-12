@@ -30,9 +30,10 @@ const SongList: React.FC<SongListProps> = ({ songs: initial }) => {
 	const loadMore = async () => {
 		await sleep(2000)
 
-		const res = (await getSongs(songs.meta.next_cursor!)) as ApiResponseType<
-			MusicType[]
-		>
+		const res = (await getSongs(
+			'',
+			songs.meta.next_cursor!
+		)) as ApiResponseType<MusicType[]>
 		// console.log(res)
 		if (res.data) {
 			let exists = songs?.data.some((song) => song.id !== res.data?.[0].id)

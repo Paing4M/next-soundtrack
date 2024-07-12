@@ -126,6 +126,12 @@ const PlayerContent = ({
 				setSong((prev) => ({ ...prev, isInUserLibrary: true }))
 			}
 			emit('library', { status: res.status, music: res.music })
+
+			toast.success(
+				res?.status == 201
+					? 'Added to your library'
+					: 'Removed from your library'
+			)
 		}
 	}
 

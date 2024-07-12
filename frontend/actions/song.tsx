@@ -1,7 +1,11 @@
 import Axios from '@/config/axios'
 
-export const getSongs = async (cursor: string | null = null) => {
-	const res = await Axios.get('/music?cursor=' + cursor)
+export const getSongs = async (
+	search: string | '' = '',
+	cursor: string | null = null
+) => {
+	const res = await Axios.get('/music?search=' + search + '&cursor=' + cursor)
+	console.log(search)
 	return res.data
 }
 
