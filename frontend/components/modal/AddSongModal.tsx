@@ -14,8 +14,8 @@ import { useEventBus } from '@/providers/EventBusProvider'
 const AddSongModal = () => {
 	const { isOpen, onClose } = useAddSongModal()
 	const [state, formAction] = useFormState(addSong, undefined)
-	const [file, setFile] = useState<FileList>()
-	const [image, setImage] = useState<File>()
+	const [file, setFile] = useState<FileList | null>()
+	const [image, setImage] = useState<File | null>()
 
 	const { emit } = useEventBus()
 
@@ -24,12 +24,12 @@ const AddSongModal = () => {
 		if (img) setImage(img)
 	}
 
-	console.log(state?.data)
-
 	useEffect(() => {
 		if (state?.succss) {
 			emit('musicAdded', state?.data?.music)
 			onClose()
+			setFile(null)
+			setImage(null)
 			toast.success('Song is added successfully.')
 		}
 	}, [state])

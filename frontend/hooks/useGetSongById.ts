@@ -66,8 +66,9 @@ const useGetSongById = (id: string) => {
 			loading,
 			songUrl,
 			error,
+			setError,
 		}),
-		[loading, song, songUrl]
+		[loading, song, songUrl, error]
 	)
 }
 

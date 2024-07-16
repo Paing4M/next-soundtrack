@@ -8,13 +8,15 @@ import toast from 'react-hot-toast'
 
 const Player = () => {
 	const { activeId } = usePlayer()
-	const { song, songUrl, error } = useGetSongById(activeId!)
+	const { song, songUrl, error, setError } = useGetSongById(activeId!)
 
 	if (error) {
 		toast.error(error)
+		setError(null)
+		return
 	}
 
-	if (!activeId || !song || !songUrl) return null
+	if (!activeId || !song || !songUrl || error) return null
 
 	return (
 		<div className=' fixed bottom-0 h-[80px] text-white bg-secondary-color px-6  w-full backdrop-blur-lg'>
