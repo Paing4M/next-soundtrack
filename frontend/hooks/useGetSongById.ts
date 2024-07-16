@@ -6,6 +6,7 @@ const useGetSongById = (id: string) => {
 	const [loading, setLoading] = useState(false)
 	const [song, setSong] = useState<MusicType | undefined>(undefined)
 	const [songUrl, setSongUrl] = useState<string | undefined>(undefined)
+	const [error, setError] = useState(null)
 
 	useEffect(() => {
 		if (!id) return
@@ -28,18 +29,31 @@ const useGetSongById = (id: string) => {
 					const blob = new Blob([res.data], { type: 'audio/mpeg' })
 					const url = URL.createObjectURL(blob)
 					setSongUrl(url)
+					setError(null)
 				}
-			} catch (error) {
-				console.error('Error fetching audio:', error)
+			} catch (error: any) {
+				setLoading(false)
+				if (error.response.status === 404) {
+					setError(error.response.data.message)
+					return
+				}
 			}
 		}
 
 		const getActiveSong = async () => {
 			setLoading(true)
-			const res = await getSong(id)
-			if (res) {
+			try {
+				const res = await getSong(id)
+				if (res) {
+					setLoading(false)
+					setSong(res.data)
+					setError(null)
+				}
+			} catch (error: any) {
 				setLoading(false)
-				setSong(res.data)
+				if (error.response.status === 404) {
+					setError(error.response.data.message)
+				}
 			}
 		}
 		getActiveSong()
@@ -51,6 +65,7 @@ const useGetSongById = (id: string) => {
 			song,
 			loading,
 			songUrl,
+			error,
 		}),
 		[loading, song, songUrl]
 	)

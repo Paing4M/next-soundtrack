@@ -6,8 +6,10 @@ import MobileSongItem from './MobileSongItem'
 import LoadMore from '../LoadMore'
 import { useInView } from 'react-intersection-observer'
 import { useEffect, useState } from 'react'
-import { getSongs } from '@/actions/song'
+import { deleteMusic, getSongs } from '@/actions/song'
 import { sleep } from '@/lib/utlis'
+import toast from 'react-hot-toast'
+import { useEventBus } from '@/providers/EventBusProvider'
 
 interface SongListProps {
 	songs: ApiResponseType<MusicType[]>
@@ -18,6 +20,7 @@ const SongList: React.FC<SongListProps> = ({ songs: initial }) => {
 
 	const onPlay = useOnPlay(songs.data!)
 	const { ref, inView } = useInView()
+	const { on } = useEventBus()
 
 	useEffect(() => {
 		if (inView) {
@@ -34,7 +37,7 @@ const SongList: React.FC<SongListProps> = ({ songs: initial }) => {
 			'',
 			songs.meta.next_cursor!
 		)) as ApiResponseType<MusicType[]>
-		// console.log(res)
+
 		if (res.data) {
 			let exists = songs?.data.some((song) => song.id !== res.data?.[0].id)
 
@@ -56,6 +59,32 @@ const SongList: React.FC<SongListProps> = ({ songs: initial }) => {
 		}
 	}
 
+	const handleDelete = async (e: React.MouseEvent, id: string) => {
+		e.stopPropagation()
+		const res = await deleteMusic(id)
+		if (res.status == 200) {
+			toast.success(res.message)
+			let updatedSong = songs?.data?.filter((s) => s.id !== id)
+			setSongs((prev) => ({
+				...prev,
+				data: updatedSong,
+			}))
+		}
+	}
+
+	useEffect(() => {
+		const handleMusicAdded = on('musicAdded', (song: MusicType) => {
+			setSongs((prev) => ({
+				...prev,
+				data: [song, ...prev.data],
+			}))
+		})
+
+		return () => {
+			handleMusicAdded()
+		}
+	}, [on, songs])
+
 	return (
 		<>
 			{songs && songs.data.length == 0 && (
@@ -67,11 +96,12 @@ const SongList: React.FC<SongListProps> = ({ songs: initial }) => {
 			<div className='hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  gap-4'>
 				{songs &&
 					songs.data.length > 0 &&
-					songs.data.map((song) => (
+					songs.data.map((song: MusicType) => (
 						<SongItem
 							key={song.id}
 							handleClick={(id) => onPlay(id)}
 							song={song}
+							handleDelete={handleDelete}
 						/>
 					))}
 			</div>
@@ -83,6 +113,7 @@ const SongList: React.FC<SongListProps> = ({ songs: initial }) => {
 						<MobileSongItem
 							key={song.id! + idx}
 							handleClick={(id) => onPlay(id)}
+							handleDelete={handleDelete}
 							song={song}
 						/>
 					))}

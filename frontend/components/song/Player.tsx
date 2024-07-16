@@ -4,10 +4,15 @@ import usePlayer from '@/hooks/usePlayer'
 import PlayerContent from './PlayerContent'
 import useGetSongById from '@/hooks/useGetSongById'
 import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 const Player = () => {
 	const { activeId } = usePlayer()
-	const { song, songUrl } = useGetSongById(activeId!)
+	const { song, songUrl, error } = useGetSongById(activeId!)
+
+	if (error) {
+		toast.error(error)
+	}
 
 	if (!activeId || !song || !songUrl) return null
 

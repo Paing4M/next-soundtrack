@@ -1,7 +1,7 @@
 import { logout } from '@/actions/logout'
 import { CustomUser } from '@/auth'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { PlusIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { UserCircleIcon } from '@heroicons/react/24/solid'
 import * as Tooltip from '@radix-ui/react-tooltip'
 import AddSong from '../song/AddSong'
 
@@ -39,17 +39,11 @@ const HeaderUserMenu = ({ user }: { user: CustomUser }) => {
 					className='w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 space-y-2'
 				>
 					{user?.role == 1 && (
-						<MenuItem>
+						<MenuItem as={'div'}>
 							<AddSong />
 						</MenuItem>
 					)}
 
-					{/* <MenuItem>
-						<button className='group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10'>
-							<PlusIcon className='w-5 text-white' />
-							Create Playlist
-						</button>
-					</MenuItem> */}
 					<div className='my-1 h-px bg-white/5' />
 					<MenuItem>
 						<form action={logout}>

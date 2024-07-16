@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { addSong } from '@/actions/song'
 import toast from 'react-hot-toast'
+import { useEventBus } from '@/providers/EventBusProvider'
 
 const AddSongModal = () => {
 	const { isOpen, onClose } = useAddSongModal()
@@ -16,13 +17,18 @@ const AddSongModal = () => {
 	const [file, setFile] = useState<FileList>()
 	const [image, setImage] = useState<File>()
 
+	const { emit } = useEventBus()
+
 	const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const img = e.target?.files?.[0]
 		if (img) setImage(img)
 	}
 
+	console.log(state?.data)
+
 	useEffect(() => {
 		if (state?.succss) {
+			emit('musicAdded', state?.data?.music)
 			onClose()
 			toast.success('Song is added successfully.')
 		}

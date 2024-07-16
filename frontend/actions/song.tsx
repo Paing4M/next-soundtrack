@@ -32,6 +32,7 @@ export const addSong = async (prevState: any, formData: FormData) => {
 		if (res.status == 201) {
 			return {
 				succss: true,
+				data: res.data,
 			}
 		}
 	} catch (error: any) {
@@ -51,5 +52,10 @@ export const addLibrary = async (id: string) => {
 
 export const getLibrary = async (cursor: string | null = null) => {
 	const res = await Axios.get('/library?cursor=' + cursor)
+	return res.data
+}
+
+export const deleteMusic = async (id: string) => {
+	const res = await Axios.delete('/music/' + id)
 	return res.data
 }

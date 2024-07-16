@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MusicController;
 use App\Models\Library;
+use App\Models\Music;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::prefix('auth')->group(function () {
 // music
 Route::get('/music', [MusicController::class, 'index']);
 
-Route::get('/music/{music}', [MusicController::class, 'show']);
+Route::get('/music/{id}', [MusicController::class, 'show']);
 
 Route::get('/music/stream/{music}', [MusicController::class, 'stream'])->middleware('header');
 
@@ -34,12 +35,15 @@ Route::post('/music/add-library', [MusicController::class, 'addLibrary'])->middl
 
 Route::get('/library', [MusicController::class, 'getLibrary'])->middleware(['auth:sanctum']);
 
+Route::delete('/music/{id}', [MusicController::class, 'destory'])->middleware(['auth:sanctum', 'admin']);
 
 
 
-Route::get('/test', function () {
 
-  $user = User::find(auth('sanctum')->user()->id);
-  // $lb = Library::where('user_id', $user->id);
-  return $user->library()->paginate(1);
+
+
+Route::get('/test/{id}', function ($id) {
+  // dd($id);
+  $music = Music::findOrFail($id);
+  return $music->library;
 });

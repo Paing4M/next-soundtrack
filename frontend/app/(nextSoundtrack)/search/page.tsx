@@ -1,4 +1,3 @@
-import { getSongs } from '@/actions/song'
 import { auth } from '@/auth'
 import HeaderTop from '@/components/header/HeaderTop'
 import SearchContainer from '@/components/search/SearchContainer'

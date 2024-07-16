@@ -2,9 +2,11 @@
 
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Header;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
   ->withRouting(
@@ -20,5 +22,13 @@ return Application::configure(basePath: dirname(__DIR__))
     ]);
   })
   ->withExceptions(function (Exceptions $exceptions) {
-    //
+    $exceptions->render(function (Throwable $e) {
+
+      if ($e instanceof ModelNotFoundException) {
+        return response()->json([
+          'status' => 404,
+          'message' => 'Music is not available.'
+        ], 404);
+      }
+    });
   })->create();

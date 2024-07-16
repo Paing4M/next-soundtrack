@@ -9,7 +9,18 @@ export const metadata: Metadata = {
 	description:
 		'xplore curated playlists, artist spotlights, and exclusive tracks that resonate with your soul. Elevate your auditory experience with NextSoundtrack today!',
 	icons: {
-		icon: '/assets/logo.png',
+		icon: [
+			{
+				media: '(prefers-color-scheme: light)',
+				url: '/assets/logo.dark.png',
+				href: '/assets/logo.dark.png',
+			},
+			{
+				media: '(prefers-color-scheme: dark)',
+				url: '/assets/logo.png',
+				href: '/assets/logo.png',
+			},
+		],
 	},
 }
 

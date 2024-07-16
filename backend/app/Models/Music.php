@@ -15,6 +15,7 @@ class Music extends Model {
     'author',
     'song',
     'image',
+    'dir'
   ];
 
 
@@ -28,8 +29,8 @@ class Music extends Model {
     return $this->user->contains('id', auth('sanctum')->user()->id);
   }
 
-  // public function setIsInUserLibraryAttribute() {
-  //   if (!auth('sanctum')->user()) return false;
-  //   return $this->user->contains('id', auth('sanctum')->user()->id);
-  // }
+
+  public function library() {
+    return $this->belongsTo(Library::class);
+  }
 }
