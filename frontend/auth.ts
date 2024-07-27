@@ -2,7 +2,6 @@ import NextAuth, { NextAuthConfig } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import Axios from './config/axios'
 import { JWT } from 'next-auth/jwt'
-import { AdapterUser } from 'next-auth/adapters'
 
 declare module 'next-auth' {
 	export interface Session {
@@ -46,10 +45,11 @@ const credentialConfig = CredentialsProvider({
 const config: NextAuthConfig = {
 	providers: [credentialConfig],
 	callbacks: {
-		// authorized({ request, auth }) {
-		// 	const { pathname } = request.nextUrl
-		// 	return true
-		// },
+		authorized({ request, auth }) {
+			const { pathname } = request.nextUrl
+			console.log(pathname, auth)
+			return true
+		},
 
 		async jwt({ token, user, trigger }) {
 			if (user) {

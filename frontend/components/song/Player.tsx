@@ -3,7 +3,6 @@
 import usePlayer from '@/hooks/usePlayer'
 import PlayerContent from './PlayerContent'
 import useGetSongById from '@/hooks/useGetSongById'
-import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 const Player = () => {

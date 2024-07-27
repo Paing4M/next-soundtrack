@@ -48,7 +48,7 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 	}
 
 	useEffect(() => {
-		window.addEventListener('resize', () => {
+		window?.addEventListener('resize', () => {
 			setWidth(window.innerWidth)
 		})
 
@@ -57,7 +57,7 @@ const MobilePlayer: React.FC<MobilePlayerProps> = ({
 		}
 
 		return () => {
-			window.removeEventListener('resize', () => {
+			window?.removeEventListener('resize', () => {
 				setWidth(window.innerWidth)
 			})
 		}

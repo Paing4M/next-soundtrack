@@ -6,8 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
 	title: 'Next Soundtrack | Home',
-	description:
-		'xplore curated playlists, artist spotlights, and exclusive tracks that resonate with your soul. Elevate your auditory experience with NextSoundtrack today!',
+	description:	'Elevate your auditory experience with NextSoundtrack today!',
 	icons: {
 		icon: [
 			{
